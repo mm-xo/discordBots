@@ -1,4 +1,4 @@
-# This is my journey to learn how to make discord bots with some example bots, following a course from udemy.
+# This is my journey to learn how to make Discord bots through a course on Udemy.
 <br>
 
 ### The "bot2.py" and "example_bot.py" files are the bots I made with chat gpt to see how this works, and contribute very little to my learning.
