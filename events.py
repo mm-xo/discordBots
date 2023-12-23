@@ -79,8 +79,8 @@ async def on_raw_reaction_add(payload):
 	guild_id = payload.guild_id
 	guild = bot.get_guild(guild_id)
 
-	if emoji == "🔴" and message_id == 1188069102271598592:
-		role = discord.utils.get(guild.roles, name = "The Weeknd")
+	if emoji == "🔴" and message_id == 1188069102271598592: # Checking if a reaction with a specific emoji is added to a specific message with ID xxxxxxxxxxxxxxxxx.
+		role = discord.utils.get(guild.roles, name = "The Weeknd") # Discord role object corresponding to the role named "The Weeknd" in the server (guild) where the reaction event occurred.
 		await member.add_roles(role)
 	if emoji == "🔵" and message_id == 1188069124295901215:
 		role = discord.utils.get(guild.roles, name = "Post Malone")
