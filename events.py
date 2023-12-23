@@ -1,6 +1,6 @@
 import discord
 
-intents = discord.Intents.default()
+intents = discord.Intents.all()
 intents.message_content = True
 """
 Discord introduced intents as a way to give bot developers more control over the data their bots receive from Discord servers. 
@@ -53,6 +53,87 @@ async def on_message(message):
 			the same channel before doing anything else. It keeps the program responsive while 
 			waiting for potentially slow operations, like sending a message over the internet.
 			"""
+
+@bot.event
+async def on_member_join(member):
+	"""
+	This event triggers when someone (member) joins our discord server
+	"""
+	username = member.display_name
+	guild = member.guild # guild is a server
+	guildName = guild.name
+	dmChannel = await member.create_dm() # since create_dm is a builtin discord function, we have to use await.
+	await dmChannel.send(f"Hello {username}! Welcome to {guildName}.")
+
+@bot.event
+async def on_raw_reaction_add(payload):
+	"""
+	Called when a message has a reaction added.
+	The payload in the on_raw_reaction_add event refers to the raw 
+	event data related to a reaction being added to a message. 
+	For example, the user id of the user that added the reaction
+	"""
+	emoji = payload.emoji.name
+	member = payload.member 
+	message_id = payload.message_id
+	guild_id = payload.guild_id
+	guild = bot.get_guild(guild_id)
+
+	if emoji == "🔴" and message_id == 1188069102271598592:
+		role = discord.utils.get(guild.roles, name = "The Weeknd")
+		await member.add_roles(role)
+	if emoji == "🔵" and message_id == 1188069124295901215:
+		role = discord.utils.get(guild.roles, name = "Post Malone")
+		await member.add_roles(role)
+	if emoji == "🟡" and message_id == 1188069134643253328:
+		role = discord.utils.get(guild.roles, name = "Joji")
+		await member.add_roles(role)
+
+@bot.event
+async def on_raw_reaction_remove(payload):
+	"""
+	Called when a message has a reaction removed.
+	"""
+	user_id = payload.user_id
+	emoji = payload.emoji.name
+	# member = payload.member # We cannot use payload.member since it is only available if event_type is REACTION_ADD.
+	message_id = payload.message_id
+	guild_id = payload.guild_id
+	guild = bot.get_guild(guild_id)
+	member = guild.get_member(user_id) # Alternate way to get the payload member. Since we can get the user id from the payload event, we can use that to get the member from the guild.
+
+	if emoji == "🔴" and message_id == 1188069102271598592:
+		role = discord.utils.get(guild.roles, name = "The Weeknd")
+		await member.remove_roles(role)
+	if emoji == "🔵" and message_id == 1188069124295901215:
+		role = discord.utils.get(guild.roles, name = "Post Malone")
+		await member.remove_roles(role)
+	if emoji == "🟡" and message_id == 1188069134643253328:
+		role = discord.utils.get(guild.roles, name = "Joji")
+		await member.remove_roles(role)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
