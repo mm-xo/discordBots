@@ -5,3 +5,6 @@
 <br>
 
 ### The "events.py" contains information about Discord events. Bot does "something" when an event occurs.
+<br>
+
+### The "commands.py" file has various commands that the discord bot obeys. For example, coin flip, rock paper scissors, etc.
