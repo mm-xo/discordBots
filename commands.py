@@ -125,6 +125,118 @@ async def help(ctx):
     # Send the embedded message to the channel where the command was invoked
     await ctx.send(embed=myEmbed)
 
+@bot.group()
+async def edit(ctx):
+    """
+    Group of commands for editing server-related settings.
+
+    Usage:
+        !edit servername <new_server_name>
+        !edit region <new_region>
+        !edit createtextchannel <channel_name>
+        !edit createvoicechannel <channel_name>
+        !edit createrole <role_name>
+    """
+    pass
+
+@edit.command()
+async def servername(ctx, *, input):
+    """
+    Command to change the server's name.
+
+    Parameters:
+        ctx (commands.Context): The context in which the command was invoked.
+        input (str): The new server name.
+
+    Usage:
+        !edit servername <new_server_name>
+    """
+    await ctx.guild.edit(name=input)
+    await ctx.send(f"Server name changed to '{input}'.")
+
+@edit.command()
+async def region(ctx, *, input):
+    """
+    Command to change the server's region.
+
+    Parameters:
+        ctx (commands.Context): The context in which the command was invoked.
+        input (str): The new server region.
+
+    Usage:
+        !edit region <new_region>
+    """
+    await ctx.guild.edit(rtc_region=input)
+    await ctx.send(f"Server region changed to '{input}'.")
+
+@edit.command()
+async def createtextchannel(ctx, *, input):
+    """
+    Command to create a text channel within a specific category.
+
+    Parameters:
+        ctx (commands.Context): The context in which the command was invoked.
+        input (str): The name of the text channel to be created.
+
+    Usage:
+        !edit createtextchannel <channel_name>
+    """
+    # Find or create the category by name
+    category_name = "new channels"
+    category = discord.utils.get(ctx.guild.categories, name=category_name)
+    if category is None:
+        category = await ctx.guild.create_category(category_name, position=0)
+        await ctx.send(f"Category '{category_name}' created.")
+
+    # Create a text channel within the specified category
+    await ctx.guild.create_text_channel(name=input, category=category)
+    await ctx.send(f"Text channel '{input}' created in category '{category_name}'.")
+
+@edit.command()
+async def createvoicechannel(ctx, *, input):
+    """
+    Command to create a voice channel within a specific category.
+
+    Parameters:
+        ctx (commands.Context): The context in which the command was invoked.
+        input (str): The name of the voice channel to be created.
+
+    Usage:
+        !edit createvoicechannel <channel_name>
+    """
+    # Find or create the category by name
+    category_name = "new voice channels"
+    category = discord.utils.get(ctx.guild.categories, name=category_name)
+    if category is None:
+        category = await ctx.guild.create_category(category_name, position=10)
+        await ctx.send(f"Category '{category_name}' created.")
+
+    # Create a voice channel within the specified category
+    await ctx.guild.create_voice_channel(name=input, category=category)
+    await ctx.send(f"Voice channel '{input}' created in category '{category_name}'.")
+
+@edit.command()
+async def createrole(ctx, *, input):
+    """
+    Command to create a new role.
+
+    Parameters:
+        ctx (commands.Context): The context in which the command was invoked.
+        input (str): The name of the role to be created.
+
+    Usage:
+        !edit createrole <role_name>
+    """
+    await ctx.guild.create_role(name=input)
+    await ctx.send(f"Role '{input}' has been created.")
+
+
+
+
+
+
+
+
 
 
 
