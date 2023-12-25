@@ -3,7 +3,7 @@ import random
 from discord.ext import commands
 
 intents = discord.Intents.all()
-bot = commands.Bot(command_prefix = "!", intents = intents)
+bot = commands.Bot(command_prefix = "!", help_command = None, intents = intents)
 
 
 # This is a decorator that defines a function as a bot command.
@@ -100,10 +100,14 @@ async def rps(ctx, hand):
         elif bot_hand == "rock":
             await ctx.send("You won!")
 
-
-
-
-
+@bot.command(aliases = ["about"])
+async def help(ctx):
+    myEmbed = discord.Embed(title = "Commands", description = "These are the commands that you can use for this bot", color = discord.Color.dark_purple())
+    myEmbed.set_thumbnail(url = "https://i.pinimg.com/736x/ce/5c/ee/ce5cee4b4eab5058e858cbf8b65c39a4.jpg")
+    myEmbed.add_field(name = "!ping", value = "This command replies back with pong whenever you write !ping.", inline = False)
+    myEmbed.add_field(name = "!coinflip", value = "This command lets you flip a coin.", inline = False)
+    myEmbed.add_field(name = "!rps", value = "This command allows you to play a game of rock paper scissors with the bot.", inline = False)
+    await ctx.send(embed = myEmbed)
 
 
 
