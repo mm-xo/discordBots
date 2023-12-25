@@ -102,12 +102,28 @@ async def rps(ctx, hand):
 
 @bot.command(aliases = ["about"])
 async def help(ctx):
-    myEmbed = discord.Embed(title = "Commands", description = "These are the commands that you can use for this bot", color = discord.Color.dark_purple())
-    myEmbed.set_thumbnail(url = "https://i.pinimg.com/736x/ce/5c/ee/ce5cee4b4eab5058e858cbf8b65c39a4.jpg")
-    myEmbed.add_field(name = "!ping", value = "This command replies back with pong whenever you write !ping.", inline = False)
-    myEmbed.add_field(name = "!coinflip", value = "This command lets you flip a coin.", inline = False)
-    myEmbed.add_field(name = "!rps", value = "This command allows you to play a game of rock paper scissors with the bot.", inline = False)
-    await ctx.send(embed = myEmbed)
+    """
+    Command to display information about available bot commands.
+
+    Parameters:
+        ctx (commands.Context): The context in which the command was invoked.
+
+    Usage:
+        !help or !about
+    """
+    # Create an embedded message with information about commands
+    myEmbed = discord.Embed(
+        title="Commands",
+        description="These are the commands that you can use for this bot.",
+        color=discord.Color.dark_purple()
+    )
+    myEmbed.set_thumbnail(url="https://i.pinimg.com/736x/ce/5c/ee/ce5cee4b4eab5058e858cbf8b65c39a4.jpg")
+    myEmbed.add_field(name="!ping", value="This command replies back with pong whenever you write !ping.", inline=False)
+    myEmbed.add_field(name="!coinflip", value="This command lets you flip a coin.", inline=False)
+    myEmbed.add_field(name="!rps", value="This command allows you to play a game of rock paper scissors with the bot.", inline=False)
+
+    # Send the embedded message to the channel where the command was invoked
+    await ctx.send(embed=myEmbed)
 
 
 
