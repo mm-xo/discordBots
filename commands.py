@@ -230,6 +230,73 @@ async def createrole(ctx, *, input):
     await ctx.guild.create_role(name=input)
     await ctx.send(f"Role '{input}' has been created.")
 
+@bot.command()
+async def kick(ctx, user: int, *, reason=None):
+    """
+    Command to kick a user from the server.
+
+    Parameters:
+        - ctx (commands.Context): The context of the command.
+        - user (int): The ID of the user to kick.
+        - reason (str): Optional reason for kicking the user.
+
+    Usage: !kick <user_id> [reason]
+    """
+    # Get the Member object using the user ID
+    member = ctx.guild.get_member(user)
+    
+    # Check if the member is found in the guild
+    if member is None:
+        await ctx.send("User not found.")
+    else:
+        # Kick the member
+        await member.kick(reason=reason)
+        await ctx.send(f'Successfully kicked {member.name}#{member.discriminator}')
+
+@bot.command()
+async def ban(ctx, user: int, *, reason=None):
+    """
+    Command to ban a user from the server.
+
+    Parameters:
+        - ctx (commands.Context): The context of the command.
+        - user (int): The ID of the user to ban.
+        - reason (str): Optional reason for banning the user.
+
+    Usage: !ban <user_id> [reason]
+    """
+    # Get the Member object using the user ID
+    member = ctx.guild.get_member(user)
+    
+    # Check if the member is found in the guild
+    if member is None:
+        await ctx.send("User not found.")
+    else:
+        # Ban the member
+        await member.ban(reason=reason)
+        await ctx.send(f'Successfully banned {member.name}#{member.discriminator}')
+
+@bot.command()
+async def unban(ctx, user: int):
+    """
+    Command to unban a user from the server.
+
+    Parameters:
+        - ctx (commands.Context): The context of the command.
+        - user (int): The ID of the user to unban.
+
+    Usage: !unban <user_id>
+    """
+    try:
+        # Fetch the user object using the user ID
+        member = await bot.fetch_user(user)
+        
+        # Unban the user
+        await ctx.guild.unban(member)
+        await ctx.send(f"Successfully unbanned {member.name}")
+    except discord.NotFound:
+        await ctx.send("User not found.")
+
 
 
 
