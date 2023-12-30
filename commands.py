@@ -327,6 +327,87 @@ async def purge(ctx, amount, day: int = None, month: int = None, year: int = dat
         await ctx.channel.purge(limit=int(amount) + 1)
         await ctx.send(f"Previous {amount} texts have been deleted!")
 
+@bot.command()
+async def mute(ctx, user: discord.Member):
+    """
+    Command to mute a user in the voice channel.
+
+    Parameters:
+        - ctx (commands.Context): The context of the command.
+        - user (discord.Member): The member to be muted.
+
+    Usage: !mute <user_mention>
+    """
+    await user.edit(mute=True)
+    await ctx.send(f"{user.display_name} has been muted in the voice channel.")
+
+@bot.command()
+async def unmute(ctx, user: discord.Member):
+    """
+    Command to unmute a user in the voice channel.
+
+    Parameters:
+        - ctx (commands.Context): The context of the command.
+        - user (discord.Member): The member to be unmuted.
+
+    Usage: !unmute <user_mention>
+    """
+    await user.edit(mute=False)
+    await ctx.send(f"{user.display_name} has been unmuted in the voice channel.")
+
+@bot.command()
+async def deafen(ctx, user: discord.Member):
+    """
+    Command to deafen a user in the voice channel.
+
+    Parameters:
+        - ctx (commands.Context): The context of the command.
+        - user (discord.Member): The member to be deafened.
+
+    Usage: !deafen <user_mention>
+    """
+    await user.edit(deafen=True)
+    await ctx.send(f"{user.display_name} has been deafened in the voice channel.")
+
+@bot.command()
+async def undeafen(ctx, user: discord.Member):
+    """
+    Command to undeafen a user in the voice channel.
+
+    Parameters:
+        - ctx (commands.Context): The context of the command.
+        - user (discord.Member): The member to be undeafened.
+
+    Usage: !undeafen <user_mention>
+    """
+    await user.edit(deafen=False)
+    await ctx.send(f"{user.display_name} has been undeafened in the voice channel.")
+
+@bot.command()
+async def voicekick(ctx, user: discord.Member):
+    """
+    Command to kick a user from the voice channel.
+
+    Parameters:
+        - ctx (commands.Context): The context of the command.
+        - user (discord.Member): The member to be kicked from the voice channel.
+
+    Usage: !voicekick <user_mention>
+    """
+    await user.edit(voice_channel=None)
+    await ctx.send(f"{user.display_name} has been kicked from the voice channel.")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
