@@ -1,6 +1,7 @@
 import discord
 import random
 from discord.ext import commands
+from datetime import datetime
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix = "!", help_command = None, intents = intents)
@@ -296,6 +297,20 @@ async def unban(ctx, user: int):
         await ctx.send(f"Successfully unbanned {member.name}")
     except discord.NotFound:
         await ctx.send("User not found.")
+
+@bot.command()
+async def purge(ctx, amount, day : int = None, month : int = None, year : int = datetime.now().year):
+    if amount == "/":
+        if day == None or month == None:
+            return
+        else:
+            await ctx.channel.purge(after = datetime(year, month, day))
+            await ctx.send(f"texts after {day}/{month}/{year} have been deleted!")
+    else:
+        await ctx.channel.purge(limit = int(amount) + 1)
+        await ctx.send(f"previous {amount} texts have been deleted!")
+
+
 
 
 
