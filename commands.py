@@ -299,17 +299,33 @@ async def unban(ctx, user: int):
         await ctx.send("User not found.")
 
 @bot.command()
-async def purge(ctx, amount, day : int = None, month : int = None, year : int = datetime.now().year):
+async def purge(ctx, amount, day: int = None, month: int = None, year: int = datetime.now().year):
+    """
+    Command to delete messages from the channel.
+
+    Parameters:
+        - ctx (commands.Context): The context of the command.
+        - amount (int or str): The number of messages to delete or '/' to delete messages after a specific date.
+        - day (int): The day for filtering messages (only applicable if amount is '/').
+        - month (int): The month for filtering messages (only applicable if amount is '/').
+        - year (int): The year for filtering messages (only applicable if amount is '/').
+
+    Usage:
+        - To delete a specific number of messages: !purge <amount>
+        - To delete messages after a specific date: !purge / <day> <month> <year>
+    """
     if amount == "/":
-        if day == None or month == None:
+        # Check if day and month are provided for date-based purging
+        if day is None or month is None:
             return
         else:
-            await ctx.channel.purge(after = datetime(year, month, day))
-            await ctx.send(f"texts after {day}/{month}/{year} have been deleted!")
+            # Purge messages after the specified date
+            await ctx.channel.purge(after=datetime(year, month, day))
+            await ctx.send(f"Texts after {day}/{month}/{year} have been deleted!")
     else:
-        await ctx.channel.purge(limit = int(amount) + 1)
-        await ctx.send(f"previous {amount} texts have been deleted!")
-
+        # Purge the specified number of messages
+        await ctx.channel.purge(limit=int(amount) + 1)
+        await ctx.send(f"Previous {amount} texts have been deleted!")
 
 
 
