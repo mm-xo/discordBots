@@ -8,3 +8,6 @@
 <br>
 
 ### The "commands.py" file has various commands that the discord bot obeys. For example, coin flip, rock paper scissors, etc.
+<br>
+
+### The "Cogs.py" file has cogs that are loaded as an extension in the "commands.py" file. Cogs contain specific functions that we can organize in a Python class which can be unloaded from our bot on command. We can even make changes to our Cogs file without halting the functionality of our bot, and if we have added new features to our bot, then we can just reload our bot with the new features without stopping it.
