@@ -2,6 +2,7 @@ import discord
 import random
 from discord.ext import commands
 from datetime import datetime
+# await bot.load_extension("Cogs")
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix = "!", help_command = None, intents = intents)
@@ -525,6 +526,47 @@ async def voicekick(ctx, user: discord.Member):
     await user.edit(voice_channel=None)
     await ctx.send(f"{user.display_name} has been kicked from the voice channel.")
 
+@bot.command()
+async def unload(ctx):
+    """
+    Command to unload a specific extension (Cog) from the bot.
+
+    Parameters:
+    - ctx (commands.Context): The context object representing the command invocation.
+
+    Usage:
+    !unload
+
+    Notes:
+    - This command attempts to unload the "Cogs" extension from the bot.
+    - Any exceptions that occur during the unloading process are caught and printed.
+
+    """
+    try:
+        await bot.unload_extension("Cogs")
+    except Exception as e:
+        print(f'Error unloading Cogs: {e}')
+
+@bot.command()
+async def reload(ctx):
+    """
+    Reloads a Discord.py extension (cog) named "Cogs".
+
+    Parameters:
+    - ctx (commands.Context): The context object representing the context of the command.
+
+    Raises:
+    - Exception: Any exception that occurs during the reload process.
+
+    Usage:
+    - !reload
+    """
+    try:
+        # Attempt to reload the extension named "Cogs"
+        await bot.reload_extension("Cogs")
+    except Exception as e:
+        # If an exception occurs during the reload, print an error message
+        print(f'Error reloading Cogs: {e}')
 
 
 
@@ -552,11 +594,21 @@ async def voicekick(ctx, user: discord.Member):
 
 
 
+@bot.event
+async def on_ready():
+    """
+    An event triggered when the bot has successfully connected to Discord.
 
+    This event prints a message indicating that the bot has logged in and attempts to load Cogs.
 
+    """
+    print(f'Logged in as {bot.user.name}')
 
-
-
+    # Load Cogs when the bot is ready
+    try:
+        await bot.load_extension("Cogs")
+    except Exception as e:
+        print(f'Error loading Cogs: {e}')
 
 
 bot.run("MTE4NzYyOTkwMTkyNzQzNjMzOA.GJOdwU.D-lcgjihXqGWzaiaFwGJw4QvkKgZhRd3xAQXpY")
