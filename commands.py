@@ -7,6 +7,31 @@ intents = discord.Intents.all()
 bot = commands.Bot(command_prefix = "!", help_command = None, intents = intents)
 
 
+def is_me(ctx):
+    """
+    Checks if the author of the command is the bot owner.
+
+    Parameters:
+    - ctx (discord.ext.commands.Context): The context object representing the command invocation.
+
+    Returns:
+    - bool: True if the author's ID matches the bot owner's ID, False otherwise.
+    """
+    return ctx.author.id == 1115694795705290862
+
+def starts_with_a(msg):
+    """
+    Checks if the content of a Discord message starts with the letter 'a'.
+
+    Parameters:
+    - msg (discord.Message): The Discord message to be checked.
+
+    Returns:
+    - bool: True if the message content starts with 'a' or '!purge', False otherwise.
+    """
+    return msg.content.startswith("a") or msg.content.startswith("!purge")
+
+
 # This is a decorator that defines a function as a bot command.
 @bot.command() 
 async def ping(ctx):
@@ -141,6 +166,9 @@ async def edit(ctx):
     pass
 
 @edit.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def servername(ctx, *, input):
     """
     Command to change the server's name.
@@ -156,6 +184,9 @@ async def servername(ctx, *, input):
     await ctx.send(f"Server name changed to '{input}'.")
 
 @edit.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def region(ctx, *, input):
     """
     Command to change the server's region.
@@ -171,6 +202,9 @@ async def region(ctx, *, input):
     await ctx.send(f"Server region changed to '{input}'.")
 
 @edit.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def createtextchannel(ctx, *, input):
     """
     Command to create a text channel within a specific category.
@@ -194,6 +228,9 @@ async def createtextchannel(ctx, *, input):
     await ctx.send(f"Text channel '{input}' created in category '{category_name}'.")
 
 @edit.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def createvoicechannel(ctx, *, input):
     """
     Command to create a voice channel within a specific category.
@@ -217,6 +254,9 @@ async def createvoicechannel(ctx, *, input):
     await ctx.send(f"Voice channel '{input}' created in category '{category_name}'.")
 
 @edit.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def createrole(ctx, *, input):
     """
     Command to create a new role.
@@ -232,6 +272,9 @@ async def createrole(ctx, *, input):
     await ctx.send(f"Role '{input}' has been created.")
 
 @bot.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def kick(ctx, user: int, *, reason=None):
     """
     Command to kick a user from the server.
@@ -255,6 +298,9 @@ async def kick(ctx, user: int, *, reason=None):
         await ctx.send(f'Successfully kicked {member.name}#{member.discriminator}')
 
 @bot.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def ban(ctx, user: int, *, reason=None):
     """
     Command to ban a user from the server.
@@ -278,6 +324,9 @@ async def ban(ctx, user: int, *, reason=None):
         await ctx.send(f'Successfully banned {member.name}#{member.discriminator}')
 
 @bot.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def unban(ctx, user: int):
     """
     Command to unban a user from the server.
@@ -299,6 +348,9 @@ async def unban(ctx, user: int):
         await ctx.send("User not found.")
 
 @bot.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def purge(ctx, amount, day: int = None, month: int = None, year: int = datetime.now().year):
     """
     Command to delete messages from the channel.
@@ -320,14 +372,19 @@ async def purge(ctx, amount, day: int = None, month: int = None, year: int = dat
             return
         else:
             # Purge messages after the specified date
-            await ctx.channel.purge(after=datetime(year, month, day))
+            # Purge only the messages that start with "a"
+            await ctx.channel.purge(after=datetime(year, month, day), check = starts_with_a)
             await ctx.send(f"Texts after {day}/{month}/{year} have been deleted!")
     else:
         # Purge the specified number of messages
-        await ctx.channel.purge(limit=int(amount) + 1)
+        # Purge only the messages that start with "a"
+        await ctx.channel.purge(limit=int(amount) + 1, check = starts_with_a)
         await ctx.send(f"Previous {amount} texts have been deleted!")
 
 @bot.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def mute(ctx, user: discord.Member):
     """
     Command to mute a user in the voice channel.
@@ -342,6 +399,9 @@ async def mute(ctx, user: discord.Member):
     await ctx.send(f"{user.display_name} has been muted in the voice channel.")
 
 @bot.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def unmute(ctx, user: discord.Member):
     """
     Command to unmute a user in the voice channel.
@@ -356,6 +416,9 @@ async def unmute(ctx, user: discord.Member):
     await ctx.send(f"{user.display_name} has been unmuted in the voice channel.")
 
 @bot.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def deafen(ctx, user: discord.Member):
     """
     Command to deafen a user in the voice channel.
@@ -370,6 +433,9 @@ async def deafen(ctx, user: discord.Member):
     await ctx.send(f"{user.display_name} has been deafened in the voice channel.")
 
 @bot.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def undeafen(ctx, user: discord.Member):
     """
     Command to undeafen a user in the voice channel.
@@ -384,6 +450,9 @@ async def undeafen(ctx, user: discord.Member):
     await ctx.send(f"{user.display_name} has been undeafened in the voice channel.")
 
 @bot.command()
+# only execute the command if the user is the bot owner or they have a certain role
+# @commands.check(is_me)
+@commands.has_role("role that does nothing")
 async def voicekick(ctx, user: discord.Member):
     """
     Command to kick a user from the voice channel.
