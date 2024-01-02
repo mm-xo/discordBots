@@ -201,6 +201,25 @@ async def region(ctx, *, input):
     await ctx.guild.edit(rtc_region=input)
     await ctx.send(f"Server region changed to '{input}'.")
 
+@region.error
+async def errorhandler(ctx, error):
+    """
+    Custom error handler for handling errors in the region command.
+
+    Parameters:
+    - ctx (commands.Context): The context object representing the command invocation.
+    - error (commands.CommandError): The error raised during the execution of the region command.
+
+    Returns:
+    - None: This function handles the error by sending a specific message to the user.
+
+    Error Handling:
+    - If the error is CommandInvokeError, a message is sent indicating that a valid region name should be entered.
+    """
+    if isinstance(error, commands.CommandInvokeError):
+        await ctx.send("Please enter a valid region name.")
+
+
 @edit.command()
 # only execute the command if the user is the bot owner or they have a certain role
 # @commands.check(is_me)
@@ -347,6 +366,24 @@ async def unban(ctx, user: int):
     except discord.NotFound:
         await ctx.send("User not found.")
 
+@kick.error
+@ban.error
+@unban.error
+async def errorhandler(ctx, error):
+    """
+    Custom error handler for handling MissingRole errors in kick, ban, and unban commands.
+
+    Parameters:
+    - ctx (commands.Context): The context object representing the command invocation.
+    - error (commands.CommandError): The error raised during command execution.
+
+    Returns:
+    - None: This function handles the error by sending a message to the user.
+    """
+    if isinstance(error, commands.MissingRole):
+        await ctx.send("You don't have the necessary permission for this command.")
+
+
 @bot.command()
 # only execute the command if the user is the bot owner or they have a certain role
 # @commands.check(is_me)
@@ -380,6 +417,28 @@ async def purge(ctx, amount, day: int = None, month: int = None, year: int = dat
         # Purge only the messages that start with "a"
         await ctx.channel.purge(limit=int(amount) + 1, check = starts_with_a)
         await ctx.send(f"Previous {amount} texts have been deleted!")
+
+@purge.error
+async def errorhandler(ctx, error):
+    """
+    Custom error handler for handling errors in the purge command.
+
+    Parameters:
+    - ctx (commands.Context): The context object representing the command invocation.
+    - error (commands.CommandError): The error raised during the execution of the purge command.
+
+    Returns:
+    - None: This function handles the error by sending a specific message to the user.
+
+    Error Handling:
+    - If the error is MissingRequiredArgument, a message is sent indicating the need to specify either a date or a number.
+    - If the error is CommandInvokeError, a message is sent indicating that only a slash and date or a number are allowed as input.
+    """
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("You have to specify either a date or a number.")
+    elif isinstance(error, commands.CommandInvokeError):
+        await ctx.send("You can only add a slash and date, or a number as the input.")
+
 
 @bot.command()
 # only execute the command if the user is the bot owner or they have a certain role
@@ -465,11 +524,6 @@ async def voicekick(ctx, user: discord.Member):
     """
     await user.edit(voice_channel=None)
     await ctx.send(f"{user.display_name} has been kicked from the voice channel.")
-
-
-
-
-
 
 
 
