@@ -2,7 +2,8 @@ import discord
 import random
 from discord.ext import commands
 from datetime import datetime
-# await bot.load_extension("Cogs")
+from discord.ext import tasks
+
 
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix = "!", help_command = None, intents = intents)
@@ -567,32 +568,6 @@ async def reload(ctx):
     except Exception as e:
         # If an exception occurs during the reload, print an error message
         print(f'Error reloading Cogs: {e}')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 @bot.event
 async def on_ready():
