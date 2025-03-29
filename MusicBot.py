@@ -35,7 +35,7 @@ async def leave(ctx):
 
 
 
-bot.run("MTE4NzYyOTkwMTkyNzQzNjMzOA.Gir1Ze.uuLFBYszePLmFRK5tHNvXYypGr1l6kAsqDKguo")
+bot.run("bot token here")
 
 
 
