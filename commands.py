@@ -586,4 +586,4 @@ async def on_ready():
         print(f'Error loading Cogs: {e}')
 
 
-bot.run("MTE4NzYyOTkwMTkyNzQzNjMzOA.Gir1Ze.uuLFBYszePLmFRK5tHNvXYypGr1l6kAsqDKguo")
+bot.run("bot token here")
