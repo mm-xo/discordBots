@@ -82,8 +82,8 @@ async def on_message(message):
 
 
 
-bot.run('MTE3NTAzNDc3NDkwNjIwODI5Ng.GWdBCX._J6qb5iVhD-9vnPTt-0pf_4jK0vGJBkpnDWUG8')
-# client.run('MTE3NTAzNDc3NDkwNjIwODI5Ng.Gw1T7N.SaN7RuMjdZkJPumtfu5qPbH5Vtdlay2G9RflOw')
+bot.run('bot token here')
+# client.run('bot token here')
 
 
 
