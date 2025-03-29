@@ -113,4 +113,4 @@ async def on_raw_reaction_remove(payload):
 		await member.remove_roles(role)
 
 
-bot.run("MTE4NzYyOTkwMTkyNzQzNjMzOA.GJOdwU.D-lcgjihXqGWzaiaFwGJw4QvkKgZhRd3xAQXpY")
+bot.run("add token here")
